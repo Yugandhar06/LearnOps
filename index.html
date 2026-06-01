@@ -1,0 +1,849 @@
+
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yugandhar · DevOps/Cloud Engineer Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ────────────────── THEMES ────────────────── */
+[data-theme="dark"] {
+  --bg:#0a0a0f; --surface:#111118; --card:#16161f; --border:#1e1e2e;
+  --text:#e8e8f0; --muted:#5a5a7a; --grid:rgba(168,85,247,0.03);
+  --modal-bg:rgba(0,0,0,0.78); --inp-bg:#0d0d15;
+}
+[data-theme="light"] {
+  --bg:#f0f2f8; --surface:#ffffff; --card:#ffffff; --border:#dde0ee;
+  --text:#12121a; --muted:#8888aa; --grid:rgba(80,40,180,0.04);
+  --modal-bg:rgba(0,0,0,0.5); --inp-bg:#f8f8ff;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:44px 44px;pointer-events:none;z-index:0;}
+.wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:36px 24px 80px;}
+
+/* ────────── HERO HEADER ────────── */
+.hero{
+  background:var(--card);border:1px solid var(--border);border-radius:24px;
+  padding:32px 36px;margin-bottom:32px;
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at 90% 50%,rgba(168,85,247,0.07) 0%,transparent 70%),
+             radial-gradient(ellipse 40% 60% at 10% 80%,rgba(6,182,212,0.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-left{position:relative;}
+.hero-greeting{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);letter-spacing:2px;margin-bottom:8px;}
+.hero-name{
+  font-size:clamp(32px,5vw,54px);font-weight:800;letter-spacing:-2px;line-height:1;
+  background:linear-gradient(120deg,var(--text) 0%,#a855f7 55%,#06b6d4 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-goal{
+  margin-top:10px;display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(90deg,rgba(168,85,247,0.12),rgba(6,182,212,0.12));
+  border:1px solid rgba(168,85,247,0.25);border-radius:100px;
+  padding:6px 16px;
+}
+.hero-goal span{font-size:13px;font-weight:700;letter-spacing:0.5px;
+  background:linear-gradient(90deg,#a855f7,#06b6d4);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px;position:relative;}
+.hero-date{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 18px;text-align:right;}
+.hero-date .day{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;}
+.hero-date .dt{font-size:17px;font-weight:800;color:var(--text);}
+.hero-actions{display:flex;gap:8px;}
+.icon-btn{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:9px 13px;cursor:pointer;font-size:16px;line-height:1;transition:border-color .2s,transform .15s;}
+.icon-btn:hover{border-color:var(--muted);transform:scale(1.08);}
+
+/* ────────── OVERALL PROGRESS BAR ────────── */
+.overall-bar{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin-bottom:32px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.ob-label{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:0.5px;white-space:nowrap;}
+.ob-track{flex:1;min-width:120px;height:10px;background:var(--border);border-radius:10px;overflow:hidden;}
+.ob-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,#a855f7,#06b6d4);transition:width .8s cubic-bezier(.4,0,.2,1);}
+.ob-pct{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;white-space:nowrap;
+  background:linear-gradient(90deg,#a855f7,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.ob-streak{font-family:'Space Mono',monospace;font-size:12px;color:#f97316;font-weight:700;white-space:nowrap;}
+
+/* ────────── SUBJECTS GRID (rings) ────────── */
+.subjects-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+.sec-title{font-size:20px;font-weight:800;letter-spacing:-0.5px;}
+.add-subject-btn{display:flex;align-items:center;gap:6px;background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:opacity .2s,transform .15s;}
+.add-subject-btn:hover{opacity:.88;transform:scale(1.03);}
+
+.subjects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:32px;}
+.subj-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:20px;text-align:center;position:relative;overflow:hidden;transition:transform .2s,border-color .3s,box-shadow .3s;cursor:pointer;}
+.subj-card:hover{transform:translateY(-2px);}
+.subj-card.completed{border-color:var(--sc);box-shadow:0 0 22px -4px var(--sc);}
+.subj-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--sc);border-radius:18px 18px 0 0;opacity:.8;}
+.subj-del{position:absolute;top:8px;right:8px;background:none;border:none;cursor:pointer;color:var(--muted);font-size:13px;opacity:0;transition:opacity .15s,color .15s;}
+.subj-card:hover .subj-del{opacity:1;}
+.subj-del:hover{color:#ef4444;}
+.ring-wrap{width:70px;height:70px;margin:0 auto 12px;position:relative;}
+.ring-wrap svg{transform:rotate(-90deg);}
+.ring-bg{fill:none;stroke:rgba(128,128,128,0.1);stroke-width:5;}
+.ring-fill{fill:none;stroke:var(--sc);stroke-width:5;stroke-linecap:round;stroke-dasharray:188;stroke-dashoffset:188;transition:stroke-dashoffset .8s cubic-bezier(.4,0,.2,1);}
+.ring-label{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;color:var(--sc);}
+.subj-name{font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--sc);margin-bottom:3px;}
+.subj-meta{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);}
+.subj-days-left{font-family:'Space Mono',monospace;font-size:9px;margin-top:4px;color:var(--muted);}
+.subj-today-btn{margin-top:10px;background:color-mix(in srgb,var(--sc) 15%,transparent);border:1px solid color-mix(in srgb,var(--sc) 35%,transparent);color:var(--sc);font-family:'Space Mono',monospace;font-size:10px;padding:4px 12px;border-radius:8px;cursor:pointer;transition:background .2s;}
+.subj-today-btn:hover{background:color-mix(in srgb,var(--sc) 28%,transparent);}
+.subj-today-btn.done-btn{background:color-mix(in srgb,var(--sc) 25%,transparent);font-weight:700;}
+
+/* ────────── HEATMAP SECTION ────────── */
+.heatmap-section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 28px 24px;margin-bottom:32px;}
+.heatmap-scroll{overflow-x:auto;padding-bottom:6px;}
+.hmap-inner{display:grid;grid-template-columns:90px 1fr;min-width:500px;}
+.hmap-labels{display:flex;flex-direction:column;gap:5px;padding-top:28px;}
+.hmap-label{height:40px;display:flex;align-items:center;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.5px;padding-right:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:88px;}
+.hmap-cells-area{display:flex;flex-direction:column;gap:5px;}
+.hmap-day-row{display:flex;gap:3px;margin-bottom:3px;}
+.hmap-day-lbl{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);text-align:center;flex:1;min-width:0;}
+.hmap-row{display:flex;gap:3px;}
+.hcell{flex:1;min-width:0;height:40px;border-radius:5px;background:var(--surface);border:1.5px solid var(--border);cursor:pointer;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;transition:transform .12s,box-shadow .15s,border-color .2s;}
+.hcell:hover{transform:scale(1.12);z-index:2;}
+.hcell.done{border-color:var(--sc) !important;box-shadow:0 0 8px color-mix(in srgb,var(--sc) 45%,transparent);}
+.hcell.done{background:color-mix(in srgb,var(--sc) 22%,var(--surface)) !important;}
+.hcell.future{opacity:.13;cursor:default;pointer-events:none;}
+.hcell.streak3{box-shadow:0 0 14px color-mix(in srgb,var(--sc) 60%,transparent) !important;}
+.hcell.streak3.done{background:color-mix(in srgb,var(--sc) 40%,var(--surface)) !important;}
+.hcell-chk{display:none;font-size:16px;animation:cpop .28s cubic-bezier(.175,.885,.32,1.275);}
+.hcell.done .hcell-chk{display:block;}
+@keyframes cpop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.25)}100%{transform:scale(1);opacity:1}}
+.hcell-num{position:absolute;bottom:2px;right:4px;font-family:'Space Mono',monospace;font-size:7px;color:var(--muted);opacity:.5;}
+
+/* ────────── NOTES SECTION ────────── */
+.notes-section{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:32px;}
+.notes-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:20px;}
+.notes-card{border-radius:14px;border:1.5px solid var(--border);background:var(--surface);overflow:hidden;transition:border-color .25s;}
+.notes-card:hover{border-color:color-mix(in srgb,var(--nc) 45%,transparent);}
+.nc-head{display:flex;align-items:center;justify-content:space-between;padding:13px 15px 11px;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--nc) 9%,var(--surface));}
+.nc-title{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;color:var(--nc);}
+.nc-count{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);background:var(--border);border-radius:100px;padding:2px 8px;}
+.nc-add{background:color-mix(in srgb,var(--nc) 15%,transparent);border:1px solid color-mix(in srgb,var(--nc) 35%,transparent);color:var(--nc);font-family:'Space Mono',monospace;font-size:10px;padding:4px 11px;border-radius:7px;cursor:pointer;transition:background .2s,transform .15s;white-space:nowrap;}
+.nc-add:hover{background:color-mix(in srgb,var(--nc) 28%,transparent);transform:scale(1.05);}
+.notes-list{padding:8px 12px 12px;max-height:190px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.notes-list::-webkit-scrollbar{width:3px;}
+.notes-list::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+.note-empty{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);text-align:center;padding:18px 0;}
+.note-item{display:flex;gap:8px;align-items:flex-start;padding:9px 10px;background:var(--card);border-radius:9px;border-left:3px solid color-mix(in srgb,var(--nc) 55%,transparent);animation:nslide .22s ease;}
+@keyframes nslide{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.n-dot{width:5px;height:5px;border-radius:50%;background:var(--nc);margin-top:5px;flex-shrink:0;}
+.n-body{flex:1;min-width:0;}
+.n-text{font-size:12px;color:var(--text);line-height:1.5;word-break:break-word;}
+.n-meta{font-family:'Space Mono',monospace;font-size:8px;color:var(--muted);margin-top:2px;}
+.n-del{background:none;border:none;cursor:pointer;color:var(--muted);font-size:12px;padding:1px 3px;border-radius:3px;opacity:0;transition:opacity .15s,color .15s;flex-shrink:0;}
+.note-item:hover .n-del{opacity:1;}
+.n-del:hover{color:#ef4444;}
+
+/* ────────── MOTIVATION ────────── */
+.motiv{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:26px 30px;text-align:center;position:relative;overflow:hidden;margin-bottom:32px;}
+.motiv::before{content:'';position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent 0deg,rgba(168,85,247,.05) 60deg,transparent 120deg,rgba(6,182,212,.05) 180deg,transparent 240deg,rgba(34,197,94,.05) 300deg,transparent 360deg);animation:cspin 20s linear infinite;}
+@keyframes cspin{to{transform:rotate(360deg)}}
+.motiv-inner{position:relative;z-index:1;}
+.motiv-q{font-size:clamp(14px,2vw,19px);font-weight:800;letter-spacing:-.3px;margin-bottom:7px;}
+.motiv-sub{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:1px;}
+.streak-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(249,115,22,.1);border:1px solid rgba(249,115,22,.3);border-radius:100px;padding:5px 15px;margin-top:14px;font-family:'Space Mono',monospace;font-size:11px;color:#f97316;font-weight:700;}
+
+/* ────────── MODALS ────────── */
+.modal-ov{position:fixed;inset:0;background:var(--modal-bg);backdrop-filter:blur(7px);z-index:5000;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal-ov.open{opacity:1;pointer-events:all;}
+.modal-box{background:var(--card);border:1px solid var(--border);border-radius:20px;width:100%;max-width:500px;padding:26px;transform:scale(.93) translateY(10px);transition:transform .25s cubic-bezier(.175,.885,.32,1.275);}
+.modal-ov.open .modal-box{transform:scale(1) translateY(0);}
+.modal-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.modal-title{font-size:17px;font-weight:800;letter-spacing:-.3px;}
+.modal-x{background:var(--surface);border:1px solid var(--border);color:var(--muted);width:30px;height:30px;border-radius:7px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:color .15s,border-color .15s;}
+.modal-x:hover{color:var(--text);border-color:var(--muted);}
+.form-row{display:flex;flex-direction:column;gap:5px;margin-bottom:14px;}
+.form-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:.5px;}
+.form-input,.form-select{background:var(--inp-bg);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;color:var(--text);font-family:'Syne',sans-serif;font-size:14px;outline:none;transition:border-color .2s;width:100%;}
+.form-input:focus,.form-select:focus{border-color:var(--muted);}
+.form-input::placeholder{color:var(--muted);}
+.form-select option{background:var(--card);}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.modal-btn{width:100%;padding:12px;border-radius:11px;border:none;font-family:'Syne',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .2s,transform .15s;color:#fff;margin-top:4px;}
+.modal-btn:hover{opacity:.88;transform:scale(1.02);}
+
+/* notes modal extras */
+.mta{width:100%;background:var(--inp-bg);border:1.5px solid var(--border);border-radius:11px;padding:13px 15px;color:var(--text);font-family:'Syne',sans-serif;font-size:14px;resize:vertical;min-height:90px;outline:none;transition:border-color .2s;line-height:1.6;}
+.mta:focus{border-color:var(--modal-accent,#888);}
+.mta::placeholder{color:var(--muted);}
+.mfooter{display:flex;align-items:center;justify-content:space-between;margin-top:10px;}
+.mhint{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);}
+.msave{padding:10px 22px;border-radius:10px;border:none;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;color:#fff;transition:opacity .2s,transform .15s;}
+.msave:hover{opacity:.88;transform:scale(1.04);}
+.mdiv{height:1px;background:var(--border);margin:18px 0;}
+.msub{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);margin-bottom:8px;letter-spacing:.5px;}
+.mnotes{max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.mnotes::-webkit-scrollbar{width:3px;}
+.mnotes::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+/* ────────── MISC ────────── */
+.tooltip{position:fixed;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:7px 11px;font-family:'Space Mono',monospace;font-size:10px;color:var(--text);pointer-events:none;z-index:9999;opacity:0;transition:opacity .15s;white-space:nowrap;}
+.reset-btn{position:fixed;bottom:22px;right:22px;background:var(--card);border:1px solid var(--border);color:var(--muted);font-family:'Space Mono',monospace;font-size:11px;padding:9px 16px;border-radius:100px;cursor:pointer;transition:all .2s;z-index:100;}
+.reset-btn:hover{border-color:var(--muted);color:var(--text);}
+.confetti-box{position:fixed;inset:0;pointer-events:none;z-index:9999;overflow:hidden;}
+.cfp{position:absolute;top:-10px;width:8px;height:8px;border-radius:2px;animation:cff 2s ease-in forwards;}
+@keyframes cff{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.done-badge{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:linear-gradient(135deg,#a855f7,#06b6d4);color:#fff;border-radius:20px;padding:28px 44px;text-align:center;z-index:10000;box-shadow:0 28px 70px rgba(168,85,247,.5);}
+.done-badge.show{display:block;animation:bpop .45s cubic-bezier(.175,.885,.32,1.275) forwards;}
+@keyframes bpop{0%{transform:translate(-50%,-50%) scale(0);opacity:0}100%{transform:translate(-50%,-50%) scale(1);opacity:1}}
+.done-badge h2{font-size:28px;font-weight:800;margin-bottom:6px;}
+.done-badge p{font-size:13px;opacity:.85;font-family:'Space Mono',monospace;}
+.empty-state{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);text-align:center;padding:32px;border:1.5px dashed var(--border);border-radius:14px;}
+
+/* color presets palette */
+.color-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+.color-dot{width:26px;height:26px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:transform .15s,border-color .15s;}
+.color-dot:hover{transform:scale(1.15);}
+.color-dot.sel{border-color:var(--text);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<!-- ═══ HERO ═══ -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-greeting">// WELCOME BACK,</div>
+    <div class="hero-name">YUGANDHAR</div>
+    <div class="hero-goal">
+      <span>🎯 Goal: DevOps Engineer &amp; Cloud Engineer</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-actions">
+      <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme">☀️</button>
+    </div>
+    <div class="hero-date">
+      <div class="day" id="hday">MON</div>
+      <div class="dt" id="hdt">Jun 01, 2026</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ OVERALL PROGRESS ═══ -->
+<div class="overall-bar">
+  <div class="ob-label">OVERALL PROGRESS</div>
+  <div class="ob-track"><div class="ob-fill" id="obFill" style="width:0%"></div></div>
+  <div class="ob-pct" id="obPct">0%</div>
+  <div class="ob-streak" id="obStreak">🔥 0-day streak</div>
+</div>
+
+<!-- ═══ SUBJECTS ═══ -->
+<div class="subjects-header">
+  <div class="sec-title">My Subjects</div>
+  <button class="add-subject-btn" onclick="openAddSubject()">＋ Add Subject</button>
+</div>
+<div class="subjects-grid" id="subjectsGrid"></div>
+
+<!-- ═══ HEATMAP ═══ -->
+<div class="heatmap-section">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:10px;">
+    <div class="sec-title">Learning Heatmap</div>
+    <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);">each row = subject · each cell = 1 day · click to mark done</div>
+  </div>
+  <div class="heatmap-scroll">
+    <div class="hmap-inner" id="hmapInner">
+      <div class="hmap-labels" id="hmapLabels"></div>
+      <div class="hmap-cells-area" id="hmapCells"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ NOTES ═══ -->
+<div class="notes-section">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:10px;">
+    <div class="sec-title">Learning Notes</div>
+    <div style="font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);">write what you learned each session</div>
+  </div>
+  <div class="notes-grid" id="notesGrid"></div>
+</div>
+
+<!-- ═══ MOTIVATION ═══ -->
+<div class="motiv">
+  <div class="motiv-inner">
+    <div class="motiv-q" id="motivQ">"Every command you run today builds the cloud architect you'll become."</div>
+    <div class="motiv-sub">— YUGANDHAR · DEVOPS &amp; CLOUD ENGINEER IN THE MAKING</div>
+    <div class="streak-badge" id="streakBadge">🔥 0-day streak</div>
+  </div>
+</div>
+
+</div><!-- /wrap -->
+
+<!-- ═══ MODAL: Add Subject ═══ -->
+<div class="modal-ov" id="addSubjModal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <div class="modal-title">Add New Subject</div>
+      <button class="modal-x" onclick="closeModal('addSubjModal')">✕</button>
+    </div>
+    <div class="form-row">
+      <div class="form-label">SUBJECT NAME</div>
+      <input class="form-input" id="sName" placeholder="e.g. Docker, Kubernetes, AWS...">
+    </div>
+    <div class="form-row">
+      <div class="form-label">EMOJI / ICON (optional)</div>
+      <input class="form-input" id="sEmoji" placeholder="e.g. 🐳" maxlength="4">
+    </div>
+    <div class="form-row-2">
+      <div class="form-row" style="margin:0">
+        <div class="form-label">TARGET DAYS</div>
+        <input class="form-input" id="sDays" type="number" min="1" max="365" placeholder="30">
+      </div>
+      <div class="form-row" style="margin:0">
+        <div class="form-label">HRS / DAY</div>
+        <input class="form-input" id="sHrs" type="number" min="0.5" max="12" step="0.5" placeholder="1">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">COLOR</div>
+      <div class="color-row" id="colorPicker"></div>
+    </div>
+    <button class="modal-btn" id="addSubjBtn" onclick="confirmAddSubject()">Add Subject</button>
+  </div>
+</div>
+
+<!-- ═══ MODAL: Notes ═══ -->
+<div class="modal-ov" id="notesModal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <div class="modal-title" id="notesModalTitle">Add Note</div>
+      <button class="modal-x" onclick="closeModal('notesModal')">✕</button>
+    </div>
+    <textarea class="mta" id="noteTA" placeholder="What did you learn today? e.g. Wrote a Dockerfile for a Node.js app..."></textarea>
+    <div class="mfooter">
+      <span class="mhint">Ctrl+Enter to save</span>
+      <button class="msave" id="noteSaveBtn" onclick="saveNote()">Save Note ✓</button>
+    </div>
+    <div class="mdiv"></div>
+    <div class="msub">ALL NOTES FOR THIS SUBJECT</div>
+    <div class="mnotes" id="modalNotesList"></div>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div class="tooltip" id="tooltip"></div>
+<!-- Reset -->
+<button class="reset-btn" onclick="confirmReset()">↺ Reset Today</button>
+<!-- Confetti -->
+<div class="confetti-box" id="confettiBox"></div>
+<!-- All done -->
+<div class="done-badge" id="doneBadge"><h2>🎉 All Done Today!</h2><p>INCREDIBLE WORK, YUGANDHAR!</p></div>
+
+<script>
+// ═══════════════ DATA ═══════════════
+const STORAGE = {
+  subjects: 'yug_subjects_v1',
+  heat:     'yug_heat_v1',
+  notes:    'yug_notes_v1',
+  theme:    'yug_theme_v1'
+};
+
+const COLOR_PALETTE = [
+  '#f97316','#06b6d4','#a855f7','#22c55e',
+  '#ec4899','#eab308','#ef4444','#3b82f6',
+  '#14b8a6','#f43f5e','#8b5cf6','#84cc16'
+];
+
+const DEFAULT_SUBJECTS = [
+  { id:'sql',    name:'SQL',         emoji:'🗄️', color:'#f97316', days:30, hrs:1 },
+  { id:'java',   name:'Java',        emoji:'☕', color:'#06b6d4', days:30, hrs:1 },
+  { id:'coding', name:'Coding',      emoji:'💻', color:'#a855f7', days:30, hrs:1 },
+  { id:'linux',  name:'Linux/DevOps',emoji:'🐧', color:'#22c55e', days:30, hrs:1 }
+];
+
+const QUOTES = [
+  '"Every command you run today builds the cloud architect you\'ll become."',
+  '"DevOps is a journey. Keep pushing commits to yourself."',
+  '"Small daily progress beats occasional perfection."',
+  '"The pipeline to your dream job runs through consistent practice."',
+  '"Your future self — the Cloud Engineer — is watching. Don\'t stop."',
+  '"Containers, clusters, clouds — one hour at a time."'
+];
+
+function loadJ(k, fb) { try { return JSON.parse(localStorage.getItem(k)) || fb; } catch(e) { return fb; } }
+function saveJ(k, v)  { localStorage.setItem(k, JSON.stringify(v)); }
+
+let subjects = loadJ(STORAGE.subjects, null);
+if (!subjects) { subjects = DEFAULT_SUBJECTS; saveJ(STORAGE.subjects, subjects); }
+
+let heat = loadJ(STORAGE.heat, {});
+let notes = loadJ(STORAGE.notes, {});
+let theme = localStorage.getItem(STORAGE.theme) || 'dark';
+
+// Ensure heat arrays exist for all subjects
+subjects.forEach(s => {
+  if (!heat[s.id]) heat[s.id] = new Array(s.days).fill(false);
+  // extend if days changed
+  while (heat[s.id].length < s.days) heat[s.id].push(false);
+});
+saveJ(STORAGE.heat, heat);
+
+// ═══════════════ THEME ═══════════════
+function applyTheme(t) {
+  theme = t;
+  document.documentElement.setAttribute('data-theme', t);
+  const b = document.getElementById('themeBtn');
+  if (b) b.textContent = t === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem(STORAGE.theme, t);
+}
+function toggleTheme() { applyTheme(theme === 'dark' ? 'light' : 'dark'); }
+applyTheme(theme);
+
+// ═══════════════ DATE ═══════════════
+function setDate() {
+  const n = new Date();
+  const ds = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+  const ms = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  document.getElementById('hday').textContent = ds[n.getDay()];
+  document.getElementById('hdt').textContent = ms[n.getMonth()] + ' ' + n.getDate() + ', ' + n.getFullYear();
+}
+
+// ═══════════════ HELPERS ═══════════════
+function escH(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+function todayIdx(s) { return s.days - 1; }
+
+// ═══════════════ RENDER SUBJECTS (rings) ═══════════════
+function renderSubjects() {
+  const grid = document.getElementById('subjectsGrid');
+  grid.innerHTML = '';
+  if (!subjects.length) {
+    grid.innerHTML = '<div class="empty-state">No subjects yet.<br>Click "Add Subject" to begin.</div>';
+    return;
+  }
+  subjects.forEach(s => {
+    const tid = todayIdx(s);
+    const done = (heat[s.id] || []).filter(Boolean).length;
+    const pct = Math.round((done / s.days) * 100);
+    const circum = 2 * Math.PI * 30;
+    const offset = circum - (pct / 100) * circum;
+    const isDoneToday = heat[s.id] && heat[s.id][tid];
+    const daysLeft = s.days - done;
+
+    const card = document.createElement('div');
+    card.className = 'subj-card' + (isDoneToday ? ' completed' : '');
+    card.style.setProperty('--sc', s.color);
+    card.innerHTML = `
+      <button class="subj-del" onclick="deleteSubject('${s.id}',event)" title="Remove">✕</button>
+      <div class="ring-wrap">
+        <svg viewBox="0 0 64 64" width="70" height="70">
+          <circle class="ring-bg" cx="32" cy="32" r="30"/>
+          <circle class="ring-fill" cx="32" cy="32" r="30"
+            style="stroke-dasharray:${circum};stroke-dashoffset:${offset}"/>
+        </svg>
+        <div class="ring-label">${pct}%</div>
+      </div>
+      <div class="subj-name">${escH(s.emoji||'')} ${escH(s.name)}</div>
+      <div class="subj-meta">${s.hrs}hr/day · ${s.days} days</div>
+      <div class="subj-days-left">${done}/${s.days} done · ${daysLeft} left</div>
+      <button class="subj-today-btn ${isDoneToday?'done-btn':''}"
+        onclick="toggleToday('${s.id}',event)">
+        ${isDoneToday ? '✓ Done Today' : '○ Mark Today'}
+      </button>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+// ═══════════════ TODAY TOGGLE ═══════════════
+function toggleToday(id, e) {
+  if (e) e.stopPropagation();
+  const s = subjects.find(x => x.id === id);
+  if (!s) return;
+  const tid = todayIdx(s);
+  if (!heat[id]) heat[id] = new Array(s.days).fill(false);
+  heat[id][tid] = !heat[id][tid];
+  saveJ(STORAGE.heat, heat);
+  if (heat[id][tid]) spawnConfetti(s.color);
+  checkAllDone();
+  renderAll();
+}
+
+// ═══════════════ HEATMAP ═══════════════
+function renderHeatmap() {
+  const labelsEl = document.getElementById('hmapLabels');
+  const cellsEl  = document.getElementById('hmapCells');
+  labelsEl.innerHTML = '';
+  cellsEl.innerHTML  = '';
+
+  if (!subjects.length) return;
+
+  // max days across subjects (for column count)
+  const maxDays = Math.max(...subjects.map(s => s.days));
+
+  // Day number header row
+  const dayRow = document.createElement('div');
+  dayRow.className = 'hmap-day-row';
+  for (let d = 0; d < maxDays; d++) {
+    const lbl = document.createElement('div');
+    lbl.className = 'hmap-day-lbl';
+    lbl.textContent = (d + 1) % 5 === 0 ? (d + 1) : '';
+    dayRow.appendChild(lbl);
+  }
+  cellsEl.appendChild(dayRow);
+
+  subjects.forEach(s => {
+    // Label
+    const lbl = document.createElement('div');
+    lbl.className = 'hmap-label';
+    lbl.style.color = s.color;
+    lbl.textContent = (s.emoji || '') + ' ' + s.name;
+    labelsEl.appendChild(lbl);
+
+    // Cells row
+    const row = document.createElement('div');
+    row.className = 'hmap-row';
+    const tid = todayIdx(s);
+
+    for (let d = 0; d < maxDays; d++) {
+      const cell = document.createElement('div');
+      cell.className = 'hcell';
+      cell.style.setProperty('--sc', s.color);
+
+      if (d >= s.days) {
+        // out of scope for this subject
+        cell.style.opacity = '0.06';
+        cell.style.cursor = 'default';
+        cell.style.pointerEvents = 'none';
+        row.appendChild(cell);
+        continue;
+      }
+
+      if (d > tid) cell.classList.add('future');
+
+      const chk = document.createElement('span');
+      chk.className = 'hcell-chk';
+      chk.textContent = '✓';
+      cell.appendChild(chk);
+
+      const num = document.createElement('span');
+      num.className = 'hcell-num';
+      num.textContent = d + 1;
+      cell.appendChild(num);
+
+      const isDone = heat[s.id] && heat[s.id][d];
+      if (isDone) cell.classList.add('done');
+
+      // streak glow
+      if (d >= 2 && heat[s.id] && heat[s.id][d] && heat[s.id][d-1] && heat[s.id][d-2])
+        cell.classList.add('streak3');
+
+      if (d <= tid) {
+        cell.addEventListener('click', (function(sid, day){ return function(){ toggleCellByDay(sid, day); }; })(s.id, d));
+        cell.addEventListener('mouseenter', (function(sid, day, sc){ return function(e){ showTT(e, sc, day); }; })(s.id, d, s));
+        cell.addEventListener('mouseleave', hideTT);
+      }
+      row.appendChild(cell);
+    }
+    cellsEl.appendChild(row);
+  });
+}
+
+function toggleCellByDay(id, day) {
+  const s = subjects.find(x => x.id === id);
+  if (!s) return;
+  if (!heat[id]) heat[id] = new Array(s.days).fill(false);
+  heat[id][day] = !heat[id][day];
+  saveJ(STORAGE.heat, heat);
+  if (heat[id][day] && day === todayIdx(s)) { spawnConfetti(s.color); checkAllDone(); }
+  renderAll();
+}
+
+// ═══════════════ NOTES ═══════════════
+function renderNotesSection() {
+  const grid = document.getElementById('notesGrid');
+  grid.innerHTML = '';
+  if (!subjects.length) return;
+  subjects.forEach(s => {
+    const ns = notes[s.id] || [];
+    const card = document.createElement('div');
+    card.className = 'notes-card';
+    card.style.setProperty('--nc', s.color);
+    card.innerHTML = `
+      <div class="nc-head">
+        <div class="nc-title">${escH(s.emoji||'📖')} ${escH(s.name)}</div>
+        <div style="display:flex;align-items:center;gap:7px;">
+          <span class="nc-count" id="nc-${s.id}">${ns.length} note${ns.length===1?'':'s'}</span>
+          <button class="nc-add" onclick="openNotesModal('${s.id}')">+ Add Note</button>
+        </div>
+      </div>
+      <div class="notes-list" id="nl-${s.id}"></div>
+    `;
+    grid.appendChild(card);
+    renderCardNotes(s.id);
+  });
+}
+
+let activeNoteTopic = null;
+
+function openNotesModal(id) {
+  activeNoteTopic = id;
+  const s = subjects.find(x => x.id === id);
+  if (!s) return;
+  document.getElementById('notesModalTitle').textContent = 'Add Note — ' + (s.emoji||'') + ' ' + s.name;
+  document.getElementById('noteSaveBtn').style.background = s.color;
+  document.getElementById('noteTA').style.setProperty('--modal-accent', s.color);
+  document.getElementById('noteTA').value = '';
+  renderModalNotes(id);
+  openModal('notesModal');
+  setTimeout(() => document.getElementById('noteTA').focus(), 220);
+}
+
+function saveNote() {
+  const ta = document.getElementById('noteTA');
+  const text = ta.value.trim();
+  if (!text) { ta.focus(); return; }
+  if (!notes[activeNoteTopic]) notes[activeNoteTopic] = [];
+  const now = new Date();
+  notes[activeNoteTopic].unshift({
+    id: Date.now(),
+    text,
+    ts: now.toLocaleDateString('en-IN',{day:'2-digit',month:'short'}) + ' ' +
+        now.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',hour12:true})
+  });
+  saveJ(STORAGE.notes, notes);
+  ta.value = '';
+  renderModalNotes(activeNoteTopic);
+  renderCardNotes(activeNoteTopic);
+  const btn = document.getElementById('noteSaveBtn');
+  btn.textContent = 'Saved! ✓';
+  setTimeout(() => { btn.textContent = 'Save Note ✓'; }, 1200);
+  ta.focus();
+}
+
+function deleteNote(id, nid) {
+  notes[id] = (notes[id]||[]).filter(n => n.id !== nid);
+  saveJ(STORAGE.notes, notes);
+  renderCardNotes(id);
+  if (activeNoteTopic === id) renderModalNotes(id);
+}
+
+function noteHTML(n, id) {
+  const s = subjects.find(x => x.id === id);
+  const nc = s ? s.color : '#888';
+  return `<div class="note-item" style="--nc:${nc}">
+    <div class="n-dot"></div>
+    <div class="n-body">
+      <div class="n-text">${escH(n.text)}</div>
+      <div class="n-meta">${escH(n.ts)}</div>
+    </div>
+    <button class="n-del" onclick="deleteNote('${id}',${n.id})" title="Delete">✕</button>
+  </div>`;
+}
+
+function renderCardNotes(id) {
+  const el = document.getElementById('nl-' + id);
+  const cnt = document.getElementById('nc-' + id);
+  if (!el) return;
+  const ns = notes[id] || [];
+  if (cnt) cnt.textContent = ns.length + (ns.length===1?' note':' notes');
+  el.innerHTML = ns.length ? ns.map(n => noteHTML(n, id)).join('') : '<div class="note-empty">No notes yet.</div>';
+}
+
+function renderModalNotes(id) {
+  const el = document.getElementById('modalNotesList');
+  const ns = notes[id] || [];
+  el.innerHTML = ns.length ? ns.map(n => noteHTML(n, id)).join('') : '<div class="note-empty" style="text-align:center;padding:14px 0">No notes for this subject yet.</div>';
+}
+
+// ═══════════════ OVERALL STATS ═══════════════
+function updateOverall() {
+  if (!subjects.length) {
+    document.getElementById('obFill').style.width = '0%';
+    document.getElementById('obPct').textContent = '0%';
+    document.getElementById('obStreak').textContent = '🔥 0-day streak';
+    document.getElementById('streakBadge').textContent = '🔥 0-day streak';
+    return;
+  }
+  let totalCells = 0, doneCells = 0;
+  subjects.forEach(s => {
+    totalCells += s.days;
+    doneCells += (heat[s.id]||[]).filter(Boolean).length;
+  });
+  const pct = totalCells ? Math.round((doneCells/totalCells)*100) : 0;
+  document.getElementById('obFill').style.width = pct + '%';
+  document.getElementById('obPct').textContent = pct + '%';
+
+  // streak: days where ALL subjects with that day did it
+  let streak = 0;
+  const minDays = Math.min(...subjects.map(s => s.days));
+  for (let d = minDays - 1; d >= 0; d--) {
+    if (subjects.every(s => d < s.days && heat[s.id] && heat[s.id][d])) streak++;
+    else break;
+  }
+  const st = '🔥 ' + streak + '-day streak';
+  document.getElementById('obStreak').textContent = st;
+  document.getElementById('streakBadge').textContent = st;
+
+  // motivation
+  const doneTodayCount = subjects.filter(s => heat[s.id] && heat[s.id][todayIdx(s)]).length;
+  let q;
+  if (doneTodayCount === subjects.length && subjects.length > 0)
+    q = '"ALL SUBJECTS DONE TODAY! You\'re unstoppable, Yugandhar! 🚀"';
+  else if (doneTodayCount >= Math.ceil(subjects.length / 2))
+    q = '"More than halfway today! Keep pushing, Yugandhar!"';
+  else
+    q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+  document.getElementById('motivQ').textContent = q;
+}
+
+// ═══════════════ ADD SUBJECT MODAL ═══════════════
+let selectedColor = COLOR_PALETTE[0];
+
+function buildColorPicker() {
+  const row = document.getElementById('colorPicker');
+  row.innerHTML = '';
+  COLOR_PALETTE.forEach(c => {
+    const d = document.createElement('div');
+    d.className = 'color-dot' + (c === selectedColor ? ' sel' : '');
+    d.style.background = c;
+    d.title = c;
+    d.onclick = function() {
+      selectedColor = c;
+      document.querySelectorAll('.color-dot').forEach(x => x.classList.remove('sel'));
+      d.classList.add('sel');
+      document.getElementById('addSubjBtn').style.background = c;
+    };
+    row.appendChild(d);
+  });
+  document.getElementById('addSubjBtn').style.background = selectedColor;
+}
+
+function openAddSubject() {
+  selectedColor = COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)];
+  buildColorPicker();
+  document.getElementById('sName').value = '';
+  document.getElementById('sEmoji').value = '';
+  document.getElementById('sDays').value = '30';
+  document.getElementById('sHrs').value = '1';
+  openModal('addSubjModal');
+  setTimeout(() => document.getElementById('sName').focus(), 220);
+}
+
+function confirmAddSubject() {
+  const name = document.getElementById('sName').value.trim();
+  if (!name) { document.getElementById('sName').focus(); return; }
+  const days = Math.max(1, parseInt(document.getElementById('sDays').value) || 30);
+  const hrs  = Math.max(0.5, parseFloat(document.getElementById('sHrs').value) || 1);
+  const emoji = document.getElementById('sEmoji').value.trim() || '📚';
+  const id = 'subj_' + Date.now();
+
+  subjects.push({ id, name, emoji, color: selectedColor, days, hrs });
+  heat[id] = new Array(days).fill(false);
+  saveJ(STORAGE.subjects, subjects);
+  saveJ(STORAGE.heat, heat);
+
+  closeModal('addSubjModal');
+  renderAll();
+}
+
+function deleteSubject(id, e) {
+  if (e) e.stopPropagation();
+  const s = subjects.find(x => x.id === id);
+  if (!s) return;
+  if (!confirm('Remove "' + s.name + '" and all its data?')) return;
+  subjects = subjects.filter(x => x.id !== id);
+  delete heat[id];
+  delete notes[id];
+  saveJ(STORAGE.subjects, subjects);
+  saveJ(STORAGE.heat, heat);
+  saveJ(STORAGE.notes, notes);
+  renderAll();
+}
+
+// ═══════════════ MODAL HELPERS ═══════════════
+function openModal(id) {
+  const ov = document.getElementById(id);
+  ov.classList.add('open');
+  ov.onclick = function(e) { if (e.target === ov) closeModal(id); };
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  if (id === 'notesModal') activeNoteTopic = null;
+}
+
+// ═══════════════ TOOLTIP ═══════════════
+function showTT(e, s, day) {
+  const tt = document.getElementById('tooltip');
+  const isDone = heat[s.id] && heat[s.id][day];
+  tt.textContent = 'Day ' + (day+1) + ' · ' + s.name + ' · ' + (isDone ? '✓ Done' : '○ Not done');
+  tt.style.opacity = '1';
+  document.addEventListener('mousemove', moveTT);
+}
+function moveTT(e) {
+  const tt = document.getElementById('tooltip');
+  tt.style.left = (e.clientX + 14) + 'px';
+  tt.style.top  = (e.clientY - 30) + 'px';
+}
+function hideTT() {
+  document.getElementById('tooltip').style.opacity = '0';
+  document.removeEventListener('mousemove', moveTT);
+}
+
+// ═══════════════ CONFETTI ═══════════════
+function spawnConfetti(color) {
+  const box = document.getElementById('confettiBox');
+  for (let i = 0; i < 22; i++) {
+    const p = document.createElement('div');
+    p.className = 'cfp';
+    p.style.left = (15 + Math.random() * 70) + '%';
+    p.style.background = color;
+    p.style.width  = (5 + Math.random() * 8) + 'px';
+    p.style.height = (5 + Math.random() * 8) + 'px';
+    p.style.animationDelay    = (Math.random() * 0.5) + 's';
+    p.style.animationDuration = (1.4 + Math.random()) + 's';
+    box.appendChild(p);
+    setTimeout(() => p.remove(), 2600);
+  }
+}
+
+// ═══════════════ ALL DONE CHECK ═══════════════
+function checkAllDone() {
+  if (!subjects.length) return;
+  if (subjects.every(s => heat[s.id] && heat[s.id][todayIdx(s)])) {
+    const b = document.getElementById('doneBadge');
+    b.classList.add('show');
+    setTimeout(() => b.classList.remove('show'), 3200);
+  }
+}
+
+// ═══════════════ RESET ═══════════════
+function confirmReset() {
+  if (!confirm("Reset today's check marks for all subjects?")) return;
+  subjects.forEach(s => { if (heat[s.id]) heat[s.id][todayIdx(s)] = false; });
+  saveJ(STORAGE.heat, heat);
+  renderAll();
+}
+
+// ═══════════════ KEYBOARD ═══════════════
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    closeModal('notesModal');
+    closeModal('addSubjModal');
+  }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && activeNoteTopic) saveNote();
+});
+
+// ═══════════════ RENDER ALL ═══════════════
+function renderAll() {
+  renderSubjects();
+  renderHeatmap();
+  renderNotesSection();
+  updateOverall();
+}
+
+// ═══════════════ INIT ═══════════════
+setDate();
+renderAll();
+</script>
+</body>
+</html>
