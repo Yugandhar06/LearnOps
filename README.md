@@ -1,12 +1,12 @@
-# 🚀 LearnOps – My DevOps & Cloud Engineering Journey
+# LearnOps – My DevOps & Cloud Engineering Journey
 
-### 🌐 Live Project
+## Live Project
 
-**Website:** https://learn-ops-taupe.vercel.app/
+Website: https://learn-ops-taupe.vercel.app/
 
 ---
 
-## 📖 About the Project
+## About the Project
 
 LearnOps is a personal learning dashboard that I built to track my journey toward becoming a DevOps Engineer and Cloud Engineer.
 
@@ -16,13 +16,13 @@ The dashboard helps me manage my daily learning goals, track completed study ses
 
 ---
 
-## 🎯 My Goal
+## My Goal
 
 My goal is to build strong skills in:
 
 * SQL
 * Java
-* Data Structures & Algorithms
+* Data Structures and Algorithms
 * Linux
 * Docker
 * Kubernetes
@@ -35,21 +35,21 @@ Through consistent daily practice, I aim to become a professional DevOps and Clo
 
 ---
 
-## ✨ Features
+## Features
 
-* 📊 Learning Heatmap
-* 🎯 Subject-wise Progress Tracking
-* 🔥 Daily Streak System
-* 📝 Learning Notes
-* 🌙 Dark / Light Theme
-* 📈 Overall Progress Dashboard
-* 🎉 Achievement Celebrations
-* 📱 Responsive Design
-* 💾 Local Storage Data Persistence
+* Learning Heatmap
+* Subject-wise Progress Tracking
+* Daily Streak System
+* Learning Notes
+* Dark and Light Theme
+* Overall Progress Dashboard
+* Achievement Celebrations
+* Responsive Design
+* Local Storage Data Persistence
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 * HTML5
 * CSS3
@@ -59,7 +59,7 @@ Through consistent daily practice, I aim to become a professional DevOps and Clo
 
 ---
 
-## 🌱 Personal Growth Through This Project
+## Personal Growth Through This Project
 
 Building this project helped me improve much more than my coding skills.
 
@@ -84,7 +84,7 @@ This project serves as a reminder that progress is achieved one day at a time.
 
 ---
 
-## 🚀 Future Improvements
+## Future Improvements
 
 * User Authentication
 * Cloud Database Integration
@@ -97,14 +97,16 @@ This project serves as a reminder that progress is achieved one day at a time.
 
 ---
 
-## 👨‍💻 Developer
+## Developer
 
-**Yugandhar**
+Yugandhar
 
 Aspiring DevOps Engineer | Cloud Engineer | Software Developer
 
-> "Every command I run today builds the engineer I want to become tomorrow."
+"Every command I run today builds the engineer I want to become tomorrow."
 
 ---
 
-### ⭐ If you like this project, feel free to star the repository.
+## Repository
+
+If you find this project useful, feel free to star the repository and share your feedback.
